@@ -103,7 +103,12 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionMicuenta() {
-        return $this->render('micuenta');
+        //si el usuario no está registrado no permite visualizar el contenido
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        } else {
+            return $this->render('micuenta');
+        }
     }
 
     /**
