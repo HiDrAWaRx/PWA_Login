@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <h1 class="text-center"> Perfil: <?= Html::encode(Yii::$app->user->identity->username); ?> </h1>
 
 <div class='row'>
-    <div class="col-sm-8 col-md-4 mt-4">
+    <div class="col-sm-10 col-md-4 mt-4">
         <!-- Inicio Card JugadorClub -->
         <div class="card">
             <!-- Image JugadorClub -->
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tbody>
                         <tr>
                             <th> Nombre: </td>
-                            <td> <?= Html::encode(Yii::$app->user->identity->username); ?> </td>
+                            <td> <?= Html::encode(Yii::$app->user->identity->nombre); ?> </td>
                         </tr>
 
                         <tr>
