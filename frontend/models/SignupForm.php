@@ -11,9 +11,13 @@ use common\models\User;
  */
 class SignupForm extends Model {
 
-    public $username;
+//    public $username;
+    public $nombre;
+    public $apellido;
     public $email;
     public $password;
+    public $telefono;
+    public $nacionalidad;
 
     /**
      * {@inheritdoc}
@@ -27,13 +31,16 @@ class SignupForm extends Model {
             ['nombre', 'string', 'min' => 2, 'max' => 50],
             
             //Reglas apellido
-            ['nombre', 'string', 'min' => 4, 'max' => 50],
+            ['apellido', 'string', 'min' => 4, 'max' => 50],
             
             //Reglas email
             ['email', 'trim'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'El email ingresado ya está registrado en la plataforma.'],
+            
+            //Reglas password
+            ['password', 'string', 'min' => 6, 'max' => 20],
             
             //Reglas telefono
             ['telefono', 'string', 'min' => 7, 'max' => 30],
