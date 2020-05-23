@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tbody>
                         <tr>
                             <th> Nombre: </td>
-                            <td> <?= Html::encode(Yii::$app->user->identity->nombre); ?> </td>
+                            <td> <?= Html::encode(Yii::$app->user->identity->username); ?> </td>
                         </tr>
 
                         <tr>
