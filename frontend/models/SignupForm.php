@@ -18,6 +18,7 @@ class SignupForm extends Model {
     public $password;
     public $telefono;
     public $nacionalidad;
+    public $showpw;
 
     /**
      * {@inheritdoc}
@@ -25,28 +26,26 @@ class SignupForm extends Model {
     public function rules() {
         return [
             //Campos requeridos
-            [['nombre', 'apellido', 'email', 'password', 'telefono', 'nacionalidad'], 'required'],
-            
+            [['nombre', 'apellido', 'email', 'password'], 'required', 'message' => 'Ingrese un valor para el campo "{attribute}".'],
             //Reglas nombre
             ['nombre', 'string', 'min' => 2, 'max' => 50],
-            
             //Reglas apellido
             ['apellido', 'string', 'min' => 4, 'max' => 50],
-            
             //Reglas email
             ['email', 'trim'],
-            ['email', 'email'],
+            ['email', 'email', 'message' => 'El email ingresado no es válido.'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'El email ingresado ya está registrado en la plataforma.'],
-            
             //Reglas password
-            ['password', 'string', 'min' => 6, 'max' => 20],
-            
+            ['password', 'string', 'min' => 6, 'max' => 20, 'message' => 'La contraseña ingresada no es válida.', 
+                'tooShort' => 'La contraseña debe tener como mínimo 6 caracteres.',     //comentario para minlenght
+                'tooLong' => 'La contraseña debe tener como máximo 20 caracteres.'],    //comentario para maxlenght
             //Reglas telefono
             ['telefono', 'string', 'min' => 7, 'max' => 30],
-            
             //Reglas nacionalidad
             ['nacionalidad', 'string', 'min' => 4],
+            
+            
         ];
     }
 
