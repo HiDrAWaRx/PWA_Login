@@ -118,3 +118,24 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.signup-parent, .login-parent{
+    margin: 0 auto;    
+    width: 600px;
+    /*border: 1px solid black;*/
+}
+.signup-child-center, .login-child-center{
+    width: 400px;
+    margin: 0 105px;
+    /*border: 1px solid red;*/
+}
+.text-center{
+    text-align: center;
+}
+.form-advice{
+    color: #999;
+    margin: 0 100px;
+}
+.mb-2{
+    margin-bottom: .6em;
+}

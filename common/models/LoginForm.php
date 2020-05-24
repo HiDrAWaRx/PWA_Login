@@ -13,6 +13,7 @@ class LoginForm extends Model {
 //    public $username;
     public $email;
     public $password;
+    public $showpw;
     public $rememberMe = true;
     private $_user;
 
@@ -22,11 +23,11 @@ class LoginForm extends Model {
     public function rules() {
         return [
             //email and password are both required
-            [['email', 'password'], 'required'],
+            [['email', 'password'], 'required', 'message'=>'Ingrese un valor para el campo "{attribute}".'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
-            ['password', 'validatePassword'],
+            ['password', 'validatePassword', 'message'=>'La contraseña ingresada no es válida.'],
         ];
     }
 
