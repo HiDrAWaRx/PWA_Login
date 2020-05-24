@@ -53,11 +53,11 @@ class LoginForm extends Model {
      * @return bool whether the user is logged in successfully
      */
     public function login() {
+        $pudoIngresar = false;
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            $pudoIngresar = Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
-
-        return false;
+        return $pudoIngresar;
     }
 
     /**
@@ -65,22 +65,10 @@ class LoginForm extends Model {
      *
      * @return User|null
      */
-    protected function getUser2() {
-        if ($this->_user === null) {
-            $this->_user = User::findByUsername($this->username);
-        }
-
-        return $this->_user;
-    }
-    
-    /**
-     * Finds user by [[email]]
-     *
-     * @return User|null
-     */
     protected function getUser() {
         if ($this->_user === null) {
-            $this->_user = User::findByEmail($this->email);
+//            $this->_user = User::findByUsername($this->username);
+            $this->_user = User::findByEmail($this->email);     //modificado para acceder con el email
         }
 
         return $this->_user;
