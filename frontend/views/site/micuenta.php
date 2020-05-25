@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <h1 class="text-center"> Perfil: <?= Html::encode(Yii::$app->user->identity->username); ?> </h1>
 
 <div class='row'>
-    <div class="col-sm-8 col-md-4 mt-4">
+    <div class="col-sm-10 col-md-4 mt-4">
         <!-- Inicio Card JugadorClub -->
         <div class="card">
             <!-- Image JugadorClub -->
@@ -22,33 +22,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table table-hover">
                     <tbody>
                         <tr>
-                            <th> Nombre: </td>
-                            <td> <?= Html::encode(Yii::$app->user->identity->username); ?> </td>
-                        </tr>
-
-                        <tr>
-                            <th> Apellido: </td>
-                            <td> <?= Html::encode(Yii::$app->user->identity->apellido); ?> </td>
+                            <th> Nombre Completo: </td>
+                            <td> <?= Html::encode(Yii::$app->user->identity->full_name); ?> </td>
                         </tr>
                         <tr>
                             <th> Email: </td>
                             <td> <?= Html::encode(Yii::$app->user->identity->email); ?> </td>
                         </tr>
-                        </tr>
                         <tr>
-                            <th> Telefono: </td>
-                            <td> <?= Html::encode(Yii::$app->user->identity->telefono); ?> </td>
+                            <th> Roles: </td>
+                            <?php foreach ($model as $rol): ?>
+                              <td><?= Html::encode("{$rol['name']}")?></th>
+                            <?php endforeach; ?>
                         </tr>
-                        <tr>
-                            <th> Nacionalidad: </td>
-                            <td> <?= Html::encode(Yii::$app->user->identity->nacionalidad); ?> </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <!-- Data JugadorClub -->
         </div>
-        <!-- Fin Card JugadorClub -->
     </div>
 </div>
 
