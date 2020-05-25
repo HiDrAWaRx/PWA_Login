@@ -76,6 +76,32 @@ class SiteController extends Controller {
     }
 
     /**
+     * Permite visualizar sus datos a un usuario logueado.
+     *
+     * @return mixed
+     */
+    public function actionMicuenta() {
+      $queryRol = (new \yii\db\Query())
+              ->select(['rol.id' , 'rol.name'])
+              ->from('user')
+              ->innerJoin('user_rol', 'user_rol.idUser=user.id')
+              ->innerJoin('rol', 'user_rol.idRol=rol.id')
+              ->where(['user.id' => Yii::$app->user->identity->id]);
+      $dataRol = $queryRol->all();
+
+
+        //si el usuario no está registrado no permite visualizar el contenido
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        } else {
+            return $this->render('micuenta', [
+                        'model' => $dataRol,
+            ]);
+        }
+    }
+
+
+    /**
      * Logs in a user.
      *
      * @return mixed
@@ -96,16 +122,6 @@ class SiteController extends Controller {
             ]);
         }
     }
-
-    /**
-     * Permite visualizar sus datos a un usuario logueado.
-     *
-     * @return mixed
-     */
-    public function actionMicuenta() {
-        return $this->render('micuenta');
-    }
-
     /**
      * Logs out the current user.
      *
