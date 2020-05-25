@@ -28,19 +28,22 @@ class SiteController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['login', 'logout', 'signup', 'contact'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['signup', 'login'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'contact'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
+                'denyCallback' => function ($rule, $action) {
+                    throw new \Exception('No tienes los suficientes permisos para acceder a esta página.');
+                }
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),

@@ -40,6 +40,9 @@ AppAsset::register($this);
                 $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
             } else {
                 $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
+                $menuItems[] = ['label' => 'ABM Users', 'url' => ['/user/index']];
+                $menuItems[] = ['label' => 'ABM Eventos', 'url' => ['/evento/index']];
+                $menuItems[] = ['label' => 'ABM Rbac', 'url' => ['/rbac/index']];
                 $menuItems[] = '<li>'
                         . Html::beginForm(['/site/logout'], 'post')
                         . Html::submitButton(
