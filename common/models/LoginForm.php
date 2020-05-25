@@ -71,9 +71,9 @@ class LoginForm extends Model {
 
         return $this->_user;
     }
-    
+
     /**
-     * Finds user by [[username]]
+     * Finds user by [[email]]
      *
      * @return User|null
      */
