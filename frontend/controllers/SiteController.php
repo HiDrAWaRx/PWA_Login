@@ -19,26 +19,33 @@ use frontend\models\ContactForm;
 /**
  * Site controller
  */
-class SiteController extends Controller {
+class SiteController extends Controller
+{
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'contact', 'about'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
+                      'allow' => true,
+                      'actions' => ['login', 'signup'],
+                      'roles' => ['?'],
                     ],
                     [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['about'],
+                        'allow' => true,
+                        'roles' => ['admin'],
                     ],
                 ],
             ],
@@ -54,7 +61,8 @@ class SiteController extends Controller {
     /**
      * {@inheritdoc}
      */
-    public function actions() {
+    public function actions()
+    {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -71,7 +79,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         return $this->render('index');
     }
 
@@ -80,15 +89,22 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionMicuenta() {
-      $queryRol = (new \yii\db\Query())
+    public function actionMicuenta()
+    {
+        $queryRol = (new \yii\db\Query())
               ->select(['rol.id' , 'rol.name'])
               ->from('user')
               ->innerJoin('user_rol', 'user_rol.idUser=user.id')
               ->innerJoin('rol', 'user_rol.idRol=rol.id')
               ->where(['user.id' => Yii::$app->user->identity->id]);
-      $dataRol = $queryRol->all();
+        $dataRol = $queryRol->all();
 
+        $rol=null;
+        if (YII::$app->user->can('organizer')) {
+            $rol="Organizador";
+        } else {
+            $rol="No tomo el check";
+        }
 
         //si el usuario no está registrado no permite visualizar el contenido
         if (Yii::$app->user->isGuest) {
@@ -96,6 +112,7 @@ class SiteController extends Controller {
         } else {
             return $this->render('micuenta', [
                         'model' => $dataRol,
+                        'rolUser' => $rol,
             ]);
         }
     }
@@ -106,7 +123,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionLogin() {
+    public function actionLogin()
+    {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -127,7 +145,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionLogout() {
+    public function actionLogout()
+    {
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -138,7 +157,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionContact() {
+    public function actionContact()
+    {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
@@ -160,7 +180,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionAbout() {
+    public function actionAbout()
+    {
         return $this->render('about');
     }
 
@@ -169,7 +190,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionSignup() {
+    public function actionSignup()
+    {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', '¡Gracias por registrarte en la plataforma!. Para continuar, revisa tu correo para confirmar la dirección de email.');
@@ -186,7 +208,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionRequestPasswordReset() {
+    public function actionRequestPasswordReset()
+    {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
@@ -210,7 +233,8 @@ class SiteController extends Controller {
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token) {
+    public function actionResetPassword($token)
+    {
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidArgumentException $e) {
@@ -235,7 +259,8 @@ class SiteController extends Controller {
      * @throws BadRequestHttpException
      * @return yii\web\Response
      */
-    public function actionVerifyEmail($token) {
+    public function actionVerifyEmail($token)
+    {
         try {
             $model = new VerifyEmailForm($token);
         } catch (InvalidArgumentException $e) {
@@ -257,7 +282,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionResendVerificationEmail() {
+    public function actionResendVerificationEmail()
+    {
         $model = new ResendVerificationEmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
@@ -271,5 +297,4 @@ class SiteController extends Controller {
                     'model' => $model
         ]);
     }
-
 }
