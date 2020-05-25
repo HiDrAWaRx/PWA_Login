@@ -42,6 +42,7 @@ AppAsset::register($this);
             if (Yii::$app->user->isGuest) {
                 $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup']];
                 $menuItems[] = ['label' => 'Ingresar', 'url' => ['/site/login']];
+                $menuItems[] = ['label' => 'GII', 'url' => ['/gii/default/index']];
             } else {
                 $menuItems[] = ['label' => 'Perfil', 'url' => ['/site/micuenta']];
                 $menuItems[] = '<li>'
